@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/DRAR-Premium-Website-Redesigned.html"
+    }
+  ]
+}
