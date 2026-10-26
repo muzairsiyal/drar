@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#26382d">
+  <title>DR.AR | Store administration</title>
+  <style>
+    :root{color-scheme:light;--bg:#f7f5ef;--surface:#fffefa;--surface2:#efeee6;--text:#26382d;--muted:#68756a;--green:#344b3b;--green2:#506b53;--gold:#b89b68;--line:#dedfd4;--red:#a34438;--shadow:0 12px 32px #26382d12;font-family:"DM Sans",Arial,sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.hidden{display:none!important}
+    .top{height:70px;position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,52px);background:#26382d;color:#f5f1e6;box-shadow:0 3px 18px #1d2e2322}.brand{display:flex;align-items:baseline;gap:12px;font-size:21px;font-weight:800;letter-spacing:.04em}.brand small{font-size:11px;font-weight:500;letter-spacing:.14em;color:#d4c69d}.top-right{display:flex;align-items:center;gap:16px;color:#dedfd4;font-size:13px}.top-right button{background:none;border:1px solid #ffffff45;border-radius:8px;padding:8px 12px;color:inherit}
+    .layout{max-width:1440px;margin:auto;padding:28px clamp(16px,4vw,52px);display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px}.sidebar{height:max-content;position:sticky;top:94px;border-radius:18px;background:linear-gradient(160deg,#344b3b,#24362c);padding:16px;color:#f6f2e6;box-shadow:var(--shadow)}.side-title{padding:5px 10px 17px;font-weight:800;letter-spacing:.08em}.side-title small{display:block;margin-top:4px;color:#c9cfbd;font-size:11px;font-weight:400;letter-spacing:.04em}.side-nav{display:grid;gap:5px}.side-nav button{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:left;border:0;border-radius:10px;background:transparent;color:#e5e7dc;padding:11px 12px;font-size:13px;font-weight:600}.side-nav button:hover{background:#ffffff14}.side-nav button.active{background:#f5f1e6;color:#304537}.side-foot{margin:20px 10px 4px;color:#c9cfbd;font-size:11px;line-height:1.6}
+    main{min-width:0}.welcome{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:0 0 24px}.eyebrow{font-size:11px;color:var(--green2);letter-spacing:.16em;text-transform:uppercase;font-weight:700}.welcome h1{font-size:clamp(25px,4vw,34px);letter-spacing:-.04em;margin:6px 0}.welcome p{margin:0;color:var(--muted);font-size:14px}.btn{background:var(--green);color:#fff;border:1px solid var(--green);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700;transition:transform .16s,background .16s}.btn:hover{background:var(--green2);transform:translateY(-1px)}.btn.light{color:var(--green);background:transparent;border-color:var(--line)}.btn.light:hover{background:var(--surface2)}.btn.danger{background:var(--red);border-color:var(--red)}.btn.small{padding:6px 9px;font-size:12px}.btn:disabled{opacity:.55;cursor:wait;transform:none}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}.stat,.panel{background:var(--surface);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}.stat{padding:18px}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;margin-top:7px;font-size:24px;letter-spacing:-.04em}.panel{overflow:hidden}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:17px;margin:0}.panel-body{padding:18px 20px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px;font-size:13px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}th{background:var(--surface2);color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}tbody tr:hover{background:#f8f7f0}tbody tr:last-child td{border-bottom:0}.table-wrap select{min-width:175px}
+    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:10px 11px;margin:5px 0 12px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px #506b531a}label{display:block;color:var(--muted);font-size:12px;font-weight:600}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.badge{display:inline-flex;padding:4px 9px;border-radius:20px;background:#e9eee5;color:#39543d;font-size:11px;font-weight:700}.badge.gold{background:#f2ecd9;color:#76643f}.badge.red{background:#f5e5e0;color:#8f3d34}.muted{color:var(--muted);font-size:12px}.empty{padding:28px;color:var(--muted);text-align:center}.actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.toolbar{display:flex;gap:9px;align-items:center}.toolbar input{max-width:280px;margin:0}.toolbar select{width:auto;margin:0}.image-thumb{width:46px;height:46px;object-fit:cover;border-radius:8px;background:var(--surface2)}.progress{display:grid;gap:0}.progress-row{display:grid;grid-template-columns:24px 1fr;gap:11px;position:relative;padding-bottom:16px}.progress-row:not(:last-child):before{content:"";position:absolute;left:9px;top:20px;bottom:0;width:2px;background:var(--line)}.progress-dot{position:relative;z-index:1;width:20px;height:20px;border:2px solid var(--line);border-radius:50%;background:var(--surface)}.progress-row.current .progress-dot{border-color:var(--gold);background:var(--gold);box-shadow:0 0 0 4px #b89b6826}.progress-row.past .progress-dot{border-color:var(--green2);background:var(--green2)}.progress-row strong{font-size:13px}.progress-row.current strong{color:var(--green);font-size:15px}.progress-row time{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+    #toast{position:fixed;z-index:20;bottom:22px;left:50%;transform:translateX(-50%);padding:12px 16px;border-radius:10px;background:#26382d;color:white;box-shadow:var(--shadow);font-size:13px;max-width:min(92vw,520px)}.modal{position:fixed;z-index:12;inset:0;background:#18271bb8;display:grid;place-items:center;padding:18px}.modal-box{width:min(100%,620px);max-height:90vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 22px 80px #0003}.modal-box h2{margin:0 0 18px;font-size:20px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:10px}.close-x{float:right;border:0;background:none;color:var(--muted);font-size:22px;line-height:1}.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at 80% 10%,#e7e6d9,transparent 40%),var(--bg)}.login-card{width:min(100%,430px);background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,5vw,38px);box-shadow:0 20px 60px #26382d18}.login-card h1{margin:0 0 7px;font-size:27px}.login-card p{color:var(--muted);font-size:14px;line-height:1.6}.login-card .btn{width:100%;padding:12px}.login-brand{margin-bottom:30px;color:var(--green);font-weight:800;font-size:20px;letter-spacing:.06em}.login-brand small{display:block;margin-top:5px;color:var(--muted);font-size:10px;letter-spacing:.15em}
+    @media(max-width:900px){.layout{grid-template-columns:1fr;gap:18px;padding-top:18px}.sidebar{position:static;padding:10px}.side-title{display:none}.side-nav{display:flex;overflow:auto}.side-nav button{width:auto;white-space:nowrap}.side-foot{display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.top{height:60px}.brand{font-size:18px}.brand small{font-size:9px}.top-right{font-size:0;gap:8px}.top-right button{font-size:12px;padding:7px 9px}.layout{padding:16px 12px}.welcome{align-items:start;flex-direction:column}.stats{gap:9px}.stat{padding:14px}.stat strong{font-size:21px}.panel-head,.panel-body{padding:14px}.field-row{grid-template-columns:1fr;gap:0}.toolbar{width:100%;align-items:stretch;flex-direction:column}.toolbar input,.toolbar select{max-width:none;width:100%}.modal{padding:10px}.modal-box{padding:17px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" class="hidden" role="status" aria-live="polite"></div>
+<div id="modal-root"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script>
+const $=(selector,root=document)=>root.querySelector(selector);
+const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const money=value=>new Intl.NumberFormat('en-PK',{style:'currency',currency:'PKR',maximumFractionDigits:0}).format(Number(value)||0);
+const date=value=>value?new Date(value).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'}):'—';
+const config=window.DRAR_SUPABASE_CONFIG;
+const db=window.supabase?.createClient&&config?window.supabase.createClient(config.url,config.publishableKey):null;
+let session=null,activeTab='overview',toastTimer=null;
+let data={products:[],categories:[],orders:[],statuses:[],tickets:[],reviews:[],newsletterEvents:[],subscribers:[],subscriberCount:0,settings:null};
+function toast(message){const node=$('#toast');node.textContent=message;node.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.add('hidden'),4000)}
+function showError(error,fallback){console.error(fallback,error);toast(error?.message||fallback)}
+function shell(content){$('#app').innerHTML=`<header class="top"><a class="brand" href="admin.html">DR.AR <small>STORE ADMIN</small></a><div class="top-right"><span>${esc(session?.user?.email||'')}</span><button onclick="signOut()">Sign out</button></div></header><div class="layout"><aside class="sidebar"><div class="side-title">YOUR STORE<small>Manage DR.AR simply</small></div><nav class="side-nav">${[['overview','Overview'],['orders','Orders'],['products','Products'],['categories','Categories'],['statuses','Order statuses'],['newsletter','Newsletter & events'],['support','Support inbox'],['reviews','Reviews'],['settings','Store settings']].map(([key,title])=>`<button class="${activeTab===key?'active':''}" onclick="openTab('${key}')">${title}${key==='orders'&&data.orders.length?`<span>${data.orders.length}</span>`:''}</button>`).join('')}</nav><div class="side-foot">Changes save directly to your store. Customer account sign-up is not available here.</div></aside><main>${content}</main></div>`}
+function heading(title,subtitle,action=''){return `<div class="welcome"><div><div class="eyebrow">DR.AR · STORE CONTROL</div><h1>${title}</h1><p>${subtitle}</p></div>${action}</div>`}
+function panel(title,body,extra=''){return `<section class="panel"><div class="panel-head"><h2>${title}</h2>${extra}</div>${body}</section>`}
+function empty(message){return `<div class="empty">${message}</div>`}
+function loginView(message='Sign in with your administrator account to manage the store.'){
+  $('#app').innerHTML=`<main class="login-wrap"><form class="login-card" onsubmit="adminSignIn(event)"><div class="login-brand">DR.AR<small>PRIVATE STORE ADMINISTRATION</small></div><h1>Welcome back</h1><p>${esc(message)}</p><label for="admin-email">Administrator email</label><input id="admin-email" type="email" autocomplete="username" required><label for="admin-password">Password</label><input id="admin-password" type="password" autocomplete="current-password" required><button class="btn" type="submit">Sign in securely</button><p class="muted" style="margin-bottom:0">This private page has no sign-up option. Ask the store owner to grant your account administrator access.</p></form></main>`;
+}
+async function verifyAdmin(current){
+  if(!current){session=null;loginView();return false}
+  const {data:profile,error}=await db.from('profiles').select('role,full_name').eq('id',current.user.id).single();
+  if(error)throw error;
+  if(profile.role!=='admin'){await db.auth.signOut();session=null;loginView('This account is not authorized for store administration.');return false}
+  session=current;return true;
+}
+async function adminSignIn(event){
+  event.preventDefault();const button=$('button[type=submit]',event.currentTarget);button.disabled=true;button.textContent='Signing in…';
+  try{const {data:result,error}=await db.auth.signInWithPassword({email:$('#admin-email').value.trim(),password:$('#admin-password').value});if(error)throw error;if(!await verifyAdmin(result.session))return;await openTab('overview')}
+  catch(error){showError(error,'Could not sign in');button.disabled=false;button.textContent='Sign in securely'}
+}
+async function signOut(){const {error}=await db.auth.signOut();if(error)return showError(error,'Could not sign out');session=null;data={products:[],categories:[],orders:[],statuses:[],tickets:[],reviews:[],newsletterEvents:[],subscribers:[],subscriberCount:0,settings:null};loginView('You have been signed out.')}
+async function loadData(){
+  const queries=await Promise.all([
+    db.from('products').select('id,name,description,category_id,price_pkr,sale_price_pkr,stock,image_url,badge,tags,active,created_at').order('id',{ascending:false}),
+    db.from('categories').select('id,name,sort_order,active').order('sort_order'),
+    db.from('orders').select('id,order_number,user_id,customer_name,customer_email,customer_phone,delivery_address,delivery_city,subtotal_pkr,shipping_pkr,total_pkr,payment_method,payment_status,status,created_at,order_items(product_name,quantity,unit_price_pkr)').order('created_at',{ascending:false}).limit(250),
+    db.from('order_statuses').select('id,label,sort_order,active').order('sort_order'),
+    db.from('support_tickets').select('id,customer_name,customer_email,customer_phone,order_reference,subject,message,status,admin_reply,created_at').order('created_at',{ascending:false}).limit(200),
+    db.from('reviews').select('id,product_id,rating,body,status,created_at').order('created_at',{ascending:false}).limit(200),
+    db.from('store_settings').select('shipping_fee_pkr,free_shipping_over_pkr').eq('id',true).single(),
+    db.from('newsletter_events').select('id,title,message,location,event_at,status,created_at,sent_at').order('created_at',{ascending:false}).limit(100),
+    db.from('newsletter_subscribers').select('id,email,subscribed_at',{count:'exact'}).eq('active',true).order('subscribed_at',{ascending:false}).limit(500)
+  ]);
+  for(const result of queries)if(result.error)throw result.error;
+  data.products=queries[0].data;data.categories=queries[1].data;data.orders=queries[2].data;data.statuses=queries[3].data;data.tickets=queries[4].data;data.reviews=queries[5].data;data.settings=queries[6].data;data.newsletterEvents=queries[7].data;data.subscribers=queries[8].data;data.subscriberCount=queries[8].count||0;
+}
+async function openTab(tab){
+  activeTab=tab;
+  try{await loadData();render()}
+  catch(error){showError(error,'Could not load store data. Check your administrator access and database setup.');if(!$('#app .login-card'))shell(heading('Store data unavailable','Refresh this page or contact the owner if the problem continues.')+panel('Connection error',empty(esc(error.message||'Could not load store data.'))))}
+}
+function render(){
+  const pages={overview:overviewView,orders:ordersView,products:productsView,categories:categoriesView,statuses:statusesView,newsletter:newsletterView,support:supportView,reviews:reviewsView,settings:settingsView};
+  shell((pages[activeTab]||overviewView)());
+}
+function overviewView(){
+  const awaiting=data.orders.filter(order=>!['Delivered','Cancelled'].includes(order.status)).length;
+  const openTickets=data.tickets.filter(ticket=>!['resolved','closed'].includes(ticket.status)).length;
+  const lowStock=data.products.filter(product=>product.active&&product.stock<10).length;
+  const recent=data.orders.slice(0,6);
+  return `${heading('Good day','A clear snapshot of what needs your attention.')}<section class="stats"><article class="stat"><span>Orders to fulfil</span><strong>${awaiting}</strong></article><article class="stat"><span>Active products</span><strong>${data.products.filter(p=>p.active).length}</strong></article><article class="stat"><span>Low stock</span><strong>${lowStock}</strong></article><article class="stat"><span>Open support messages</span><strong>${openTickets}</strong></article></section>${panel('Recent orders',table(['Order','Customer','Placed','Total','Current status'],recent.map(order=>`<tr><td><b>${esc(order.order_number)}</b></td><td>${esc(order.customer_name)}</td><td>${date(order.created_at)}</td><td>${money(order.total_pkr)}</td><td><span class="badge gold">${esc(order.status)}</span></td></tr>`)),`<button class="btn light small" onclick="openTab('orders')">View all orders</button>`)}`;
+}
+function table(headers,rows){return `<div class="table-wrap"><table><thead><tr>${headers.map(header=>`<th>${header}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.join(''):`<tr><td colspan="${headers.length}">${empty('Nothing to show yet.')}</td></tr>`}</tbody></table></div>`}
+function ordersView(){
+  const statuses=data.statuses.filter(status=>status.active);
+  const rows=data.orders.map(order=>`<tr><td><b>${esc(order.order_number)}</b><div class="muted">${date(order.created_at)}</div></td><td>${esc(order.customer_name)}<div class="muted">${esc(order.customer_phone)} · ${esc(order.customer_email)}</div></td><td>${(order.order_items||[]).map(item=>`${esc(item.product_name)} × ${item.quantity}`).join('<br>')}</td><td>${money(order.total_pkr)}<div class="muted">${esc(order.payment_method)} · ${esc(order.payment_status)}</div></td><td><select aria-label="Set status for ${esc(order.order_number)}" onchange="setOrderStatus('${order.id}',this.value)">${[...statuses,...(statuses.some(s=>s.label===order.status)?[]:[{label:order.status}])].map(status=>`<option value="${esc(status.label)}" ${status.label===order.status?'selected':''}>${esc(status.label)}</option>`).join('')}</select></td><td><button class="btn light small" onclick="showOrder('${order.id}')">Details</button></td></tr>`);
+  return `${heading('Orders','Update delivery status and keep the customer’s order information together.')} ${panel('All orders',table(['Order / tracking number','Customer','Items','Total / payment','Delivery status',''],rows),`<button class="btn light small" onclick="loadTabAgain()">Refresh</button>`)}`;
+}
+async function setOrderStatus(orderId,status){
+  const {error}=await db.from('orders').update({status}).eq('id',orderId);if(error)return showError(error,'Could not update the order status');
+  toast('Order status updated');await openTab('orders');
+}
+async function showOrder(orderId){
+  const order=data.orders.find(item=>item.id===orderId);if(!order)return;
+  const {data:history,error}=await db.from('order_status_history').select('status,changed_at').eq('order_id',orderId).order('changed_at').order('id');
+  if(error)return showError(error,'Could not load order status history');
+  $('#modal-root').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><section class="modal-box"><button class="close-x" aria-label="Close" onclick="closeModal()">×</button><div class="eyebrow">ORDER DETAILS</div><h2>${esc(order.order_number)}</h2><p><b>${esc(order.customer_name)}</b><br>${esc(order.customer_phone)} · ${esc(order.customer_email)}<br>${esc(order.delivery_address)}, ${esc(order.delivery_city)}</p><p>${(order.order_items||[]).map(item=>`${esc(item.product_name)} × ${item.quantity} — ${money(item.unit_price_pkr*item.quantity)}`).join('<br>')}</p><p>Subtotal ${money(order.subtotal_pkr)} · Shipping ${money(order.shipping_pkr)} · <b>Total ${money(order.total_pkr)}</b></p><p>Payment: ${esc(order.payment_method)} · ${esc(order.payment_status)}</p>${timeline(history||[],order.status)}<div class="modal-actions"><button class="btn light" onclick="closeModal()">Close</button></div></section></div>`;
+}
+function timeline(history,current){
+  if(!history.length)history=[{status:current,changed_at:null}];
+  return `<div class="progress">${history.map((entry,index)=>`<div class="progress-row ${index===history.length-1?'current':'past'}"><span class="progress-dot"></span><div><strong>${esc(entry.status)}</strong><time>${date(entry.changed_at)}</time></div></div>`).join('')}</div>`;
+}
+function loadTabAgain(){openTab(activeTab)}
+function productsView(){
+  const rows=data.products.map(product=>`<tr><td>${product.image_url?`<img class="image-thumb" src="${esc(product.image_url)}" alt="">`:'—'}</td><td><b>${esc(product.name)}</b><div class="muted">${esc(product.description)}</div></td><td>${esc(data.categories.find(c=>c.id===product.category_id)?.name||'—')}</td><td>${money(product.sale_price_pkr||product.price_pkr)}</td><td>${product.stock}</td><td><span class="badge ${product.active?'':'red'}">${product.active?'Visible':'Hidden'}</span></td><td><div class="actions"><button class="btn light small" onclick="editProduct(${product.id})">Edit</button><button class="btn light small" onclick="toggleProduct(${product.id},${!product.active})">${product.active?'Hide':'Show'}</button><button class="btn danger small" onclick="deleteProduct(${product.id})">Delete</button></div></td></tr>`);
+  return `${heading('Products','Add products and keep prices, pictures and inventory up to date.',`<button class="btn" onclick="editProduct()">+ Add product</button>`)}${panel('Product catalogue',table(['','Product','Category','Price','Stock','Website','Actions'],rows))}`;
+}
+function productForm(product){
+  const current=product||{name:'',description:'',category_id:data.categories.find(c=>c.active)?.id,price_pkr:'',sale_price_pkr:'',stock:0,image_url:'',badge:'',tags:[],active:true};
+  $('#modal-root').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><form class="modal-box" onsubmit="saveProduct(event,${product?.id??'null'})"><button class="close-x" type="button" onclick="closeModal()">×</button><h2>${product?'Edit product':'Add a product'}</h2><label>Product name</label><input name="name" value="${esc(current.name)}" required maxlength="160"><label>What customers should know</label><textarea name="description" rows="3" maxlength="3000">${esc(current.description)}</textarea><label>Category</label><select name="category_id" required>${data.categories.filter(c=>c.active).map(c=>`<option value="${c.id}" ${c.id===current.category_id?'selected':''}>${esc(c.name)}</option>`).join('')}</select><div class="field-row"><div><label>Regular price (PKR)</label><input name="price_pkr" type="number" min="1" step="1" value="${esc(current.price_pkr)}" required></div><div><label>Sale price (optional)</label><input name="sale_price_pkr" type="number" min="1" step="1" value="${esc(current.sale_price_pkr??'')}"></div></div><div class="field-row"><div><label>Stock quantity</label><input name="stock" type="number" min="0" step="1" value="${esc(current.stock)}" required></div><div><label>Badge (optional)</label><input name="badge" value="${esc(current.badge)}" maxlength="40" placeholder="Bestseller"></div></div><label>Search tags, separated by commas</label><input name="tags" value="${esc((current.tags||[]).join(', '))}"><label>Product image (JPEG, PNG, or WebP)</label><input name="image" type="file" accept="image/jpeg,image/png,image/webp"><input name="image_url" type="hidden" value="${esc(current.image_url||'')}"><p class="muted">${current.image_url?'Current image is kept unless replaced with a new upload.':'A product image is optional.'}</p><div class="modal-actions"><button class="btn light" type="button" onclick="closeModal()">Cancel</button><button class="btn" type="submit">Save product</button></div></form></div>`;
+}
+function editProduct(id){productForm(data.products.find(p=>p.id===id))}
+async function saveProduct(event,id){
+  event.preventDefault();const form=event.currentTarget;const f=new FormData(form);const button=$('button[type=submit]',form);button.disabled=true;
+  try{
+    let imageUrl=f.get('image_url')||null;const file=f.get('image');
+    if(file?.size){if(file.size>5*1024*1024)throw new Error('Choose an image smaller than 5 MB');const path=`${crypto.randomUUID()}.${file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg'}`;const {error}=await db.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;imageUrl=db.storage.from('product-images').getPublicUrl(path).data.publicUrl}
+    const payload={name:String(f.get('name')).trim(),description:String(f.get('description')).trim(),category_id:Number(f.get('category_id')),price_pkr:Number(f.get('price_pkr')),sale_price_pkr:f.get('sale_price_pkr')?Number(f.get('sale_price_pkr')):null,stock:Number(f.get('stock')),badge:String(f.get('badge')).trim(),tags:String(f.get('tags')).split(',').map(tag=>tag.trim()).filter(Boolean),image_url:imageUrl};
+    if(payload.sale_price_pkr!==null&&payload.sale_price_pkr>=payload.price_pkr)throw new Error('Sale price must be lower than the regular price');
+    const result=id?await db.from('products').update(payload).eq('id',id):await db.from('products').insert(payload);
+    if(result.error)throw result.error;closeModal();toast('Product saved to your store');await openTab('products');
+  }catch(error){showError(error,'Could not save product');button.disabled=false}
+}
+async function toggleProduct(id,active){const {error}=await db.from('products').update({active}).eq('id',id);if(error)return showError(error,'Could not update product visibility');toast(active?'Product is visible':'Product is hidden from the shop');await openTab('products')}
+async function deleteProduct(id){if(!confirm('Permanently delete this product? Orders already containing it may prevent deletion.'))return;const {error}=await db.from('products').delete().eq('id',id);if(error)return showError(error,'Could not delete this product. Products on existing orders cannot be deleted.');toast('Product deleted');await openTab('products')}
+function categoriesView(){
+  const rows=data.categories.map(category=>`<tr><td><b>${esc(category.name)}</b></td><td>${category.sort_order}</td><td><span class="badge ${category.active?'':'red'}">${category.active?'Visible':'Hidden'}</span></td><td><div class="actions"><button class="btn light small" onclick="editCategory(${category.id})">Rename</button><button class="btn light small" onclick="toggleCategory(${category.id},${!category.active})">${category.active?'Hide':'Show'}</button><button class="btn danger small" onclick="deleteCategory(${category.id})">Delete</button></div></td></tr>`);
+  return `${heading('Categories','Keep the shop categories clear and easy to browse.',`<button class="btn" onclick="editCategory()">+ Add category</button>`)}${panel('Shop categories',table(['Category','Order','Website','Actions'],rows))}`;
+}
+async function editCategory(id){
+  const current=data.categories.find(c=>c.id===id);$('#modal-root').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><form class="modal-box" onsubmit="saveCategory(event,${id??'null'})"><button class="close-x" type="button" onclick="closeModal()">×</button><h2>${current?'Rename category':'Add a category'}</h2><label>Category name</label><input name="name" value="${esc(current?.name||'')}" required maxlength="80"><label>Display order</label><input name="sort_order" type="number" step="1" value="${current?.sort_order??data.categories.length+1}" required><div class="modal-actions"><button class="btn light" type="button" onclick="closeModal()">Cancel</button><button class="btn">Save category</button></div></form></div>`;
+}
+async function saveCategory(event,id){event.preventDefault();const f=new FormData(event.currentTarget);const payload={name:String(f.get('name')).trim(),sort_order:Number(f.get('sort_order'))};const result=id?await db.from('categories').update(payload).eq('id',id):await db.from('categories').insert(payload);if(result.error)return showError(result.error,'Could not save category');closeModal();toast('Category saved');await openTab('categories')}
+async function toggleCategory(id,active){const {error}=await db.from('categories').update({active}).eq('id',id);if(error)return showError(error,'Could not update category visibility');await openTab('categories')}
+async function deleteCategory(id){if(!confirm('Delete this category? It must not contain products.'))return;const {error}=await db.from('categories').delete().eq('id',id);if(error)return showError(error,'Move or delete its products before removing this category.');toast('Category deleted');await openTab('categories')}
+function statusesView(){
+  const rows=data.statuses.map(status=>`<tr><td><b>${esc(status.label)}</b></td><td>${status.sort_order}</td><td><span class="badge ${status.active?'':'red'}">${status.active?'Available for orders':'Removed from status choices'}</span></td><td><div class="actions"><button class="btn light small" onclick="editStatus(${status.id})">Edit</button><button class="btn light small" onclick="toggleStatus(${status.id},${!status.active})">${status.active?'Remove':'Restore'}</button></div></td></tr>`);
+  return `${heading('Order statuses','Choose the delivery stages customers and your partner will see.',`<button class="btn" onclick="editStatus()">+ Add status</button>`)}<div class="panel" style="margin-bottom:16px"><div class="panel-body"><b>Deleting keeps your history safe.</b><p class="muted" style="margin-bottom:0">Removing a status hides it from future order choices. Existing orders and their timelines keep the original label. You can restore it later.</p></div></div>${panel('Status choices',table(['Status label','Order','Availability','Actions'],rows))}`;
+}
+function editStatus(id){
+  const status=data.statuses.find(item=>item.id===id);$('#modal-root').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><form class="modal-box" onsubmit="saveStatus(event,${id??'null'})"><button class="close-x" type="button" onclick="closeModal()">×</button><h2>${status?'Edit order status':'Add an order status'}</h2><label>Customer-facing status name</label><input name="label" value="${esc(status?.label||'')}" required minlength="2" maxlength="80" placeholder="For example: Ready for Delivery"><label>Position in the order flow</label><input name="sort_order" type="number" step="1" value="${status?.sort_order??data.statuses.length+1}" required><div class="modal-actions"><button class="btn light" type="button" onclick="closeModal()">Cancel</button><button class="btn">Save status</button></div></form></div>`;
+}
+async function saveStatus(event,id){
+  event.preventDefault();const f=new FormData(event.currentTarget),label=String(f.get('label')).trim(),sort_order=Number(f.get('sort_order'));
+  if(id){const {error}=await db.rpc('rename_order_status',{p_status_id:id,p_label:label});if(error)return showError(error,'Could not rename status');const update=await db.from('order_statuses').update({sort_order}).eq('id',id);if(update.error)return showError(update.error,'Status label was saved, but its position could not be updated')}
+  else{const {error}=await db.from('order_statuses').insert({label,sort_order});if(error)return showError(error,'Could not add status')}
+  closeModal();toast('Order status saved');await openTab('statuses');
+}
+async function toggleStatus(id,active){const {error}=await db.from('order_statuses').update({active}).eq('id',id);if(error)return showError(error,'Could not update order status');toast(active?'Status restored':'Status removed from new order choices');await openTab('statuses')}
+function newsletterView(){
+  const events=data.newsletterEvents.map(item=>`<tr><td><b>${esc(item.title)}</b><div class="muted">${item.event_at?date(item.event_at):'Date not set'}${item.location?` · ${esc(item.location)}`:''}</div></td><td><span class="badge ${item.status==='sent'?'':'gold'}">${esc(item.status)}</span>${item.sent_at?`<div class="muted">Sent ${date(item.sent_at)}</div>`:''}</td><td><div class="actions">${item.status==='draft'?`<button class="btn light small" onclick="editNewsletterEvent(${item.id})">Edit</button>`:''}${['draft','failed'].includes(item.status)?`<button class="btn small" onclick="sendNewsletterEvent(${item.id})">${item.status==='failed'?'Retry sending':'Send to subscribers'}</button><button class="btn danger small" onclick="deleteNewsletterEvent(${item.id})">Delete</button>`:''}</div></td></tr>`);
+  const subscribers=data.subscribers.map(subscriber=>`<tr><td>${esc(subscriber.email)}</td><td>${date(subscriber.subscribed_at)}</td><td><button class="btn light small" onclick="unsubscribeAdminSubscriber('${subscriber.id}')">Unsubscribe</button></td></tr>`);
+  return `${heading('Newsletter & events','Manage subscribers and send event announcements to your DR.AR community.',`<button class="btn" onclick="editNewsletterEvent()">+ Create event</button>`)}<section class="stats"><article class="stat"><span>Active subscribers</span><strong>${data.subscriberCount}</strong></article><article class="stat"><span>Draft events</span><strong>${data.newsletterEvents.filter(item=>item.status==='draft').length}</strong></article><article class="stat"><span>Sent events</span><strong>${data.newsletterEvents.filter(item=>item.status==='sent').length}</strong></article><article class="stat"><span>Delivery provider</span><strong style="font-size:17px">Resend</strong></article></section><div class="panel" style="margin-bottom:16px"><div class="panel-body"><b>Send only when you are ready.</b><p class="muted" style="margin-bottom:0">Create an event as a draft, check the details, then choose “Send to subscribers”. Sent emails cannot be recalled. Failed sends can be retried; recipients who already received the email will not receive it again.</p></div></div>${panel('Events',table(['Event','Delivery','Actions'],events))}<div style="height:16px"></div>${panel('Active subscribers',table(['Email','Subscribed',''],subscribers))}<p class="muted">Showing up to ${data.subscribers.length} of ${data.subscriberCount} active subscribers.</p>`;
+}
+function localDateTime(value){if(!value)return '';const parsed=new Date(value);return new Date(parsed.getTime()-parsed.getTimezoneOffset()*60000).toISOString().slice(0,16)}
+function editNewsletterEvent(id){
+  const item=data.newsletterEvents.find(event=>event.id===id),current=item||{title:'',message:'',location:'',event_at:null};
+  $('#modal-root').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><form class="modal-box" onsubmit="saveNewsletterEvent(event,${id??'null'})"><button class="close-x" type="button" onclick="closeModal()">×</button><h2>${item?'Edit event':'Create an event announcement'}</h2><label>Event title</label><input name="title" value="${esc(current.title)}" maxlength="160" required placeholder="DR.AR at Habbit Shopping Mall"><label>Announcement</label><textarea name="message" rows="5" maxlength="10000" required placeholder="Tell subscribers what is happening and when to visit."></textarea><label>Location (optional)</label><input name="location" value="${esc(current.location)}" maxlength="240" placeholder="Habbit Shopping Mall"><label>Date and time (optional)</label><input name="event_at" type="datetime-local" value="${localDateTime(current.event_at)}"><p class="muted">This is saved as a draft. Sending will email all active subscribers from the verified DR.AR sender address.</p><div class="modal-actions"><button class="btn light" type="button" onclick="closeModal()">Cancel</button><button class="btn">Save draft</button></div></form></div>`;
+  if(item)$('textarea[name=message]',$('#modal-root')).value=item.message;
+}
+async function saveNewsletterEvent(event,id){
+  event.preventDefault();const f=new FormData(event.currentTarget),eventAt=String(f.get('event_at')||'');
+  const values={title:String(f.get('title')).trim(),message:String(f.get('message')).trim(),location:String(f.get('location')).trim(),event_at:eventAt?new Date(eventAt).toISOString():null};
+  const result=id?await db.from('newsletter_events').update(values).eq('id',id).eq('status','draft'):await db.from('newsletter_events').insert(values);
+  if(result.error)return showError(result.error,'Could not save the event draft');
+  closeModal();toast('Event draft saved');await openTab('newsletter');
+}
+async function sendNewsletterEvent(id){
+  const item=data.newsletterEvents.find(event=>event.id===id);if(!item||!confirm(`Send “${item.title}” to ${data.subscriberCount} active newsletter subscribers? This cannot be undone.`))return;
+  const {data:result,error}=await db.functions.invoke('send-newsletter-event',{body:{event_id:id}});
+  if(error)return showError(error,'Could not send newsletter event');
+  if(result?.failed)toast(`Sent to ${result.sent||0}; ${result.failed} failed. You can retry failed deliveries.`);
+  else toast(`Event sent to ${result?.sent||0} subscriber${result?.sent===1?'':'s'}.`);
+  await openTab('newsletter');
+}
+async function deleteNewsletterEvent(id){
+  const item=data.newsletterEvents.find(event=>event.id===id);if(!item||!['draft','failed'].includes(item.status)||!confirm(`Delete the ${item.status} event “${item.title}”?`))return;
+  const {error}=await db.from('newsletter_events').delete().eq('id',id);if(error)return showError(error,'Could not delete event');toast('Event deleted');await openTab('newsletter');
+}
+async function unsubscribeAdminSubscriber(id){
+  if(!confirm('Unsubscribe this address from future DR.AR newsletter emails?'))return;
+  const {error}=await db.from('newsletter_subscribers').update({active:false,unsubscribed_at:new Date().toISOString()}).eq('id',id);
+  if(error)return showError(error,'Could not unsubscribe this address');toast('Subscriber removed from future mailings');await openTab('newsletter');
+}
+function supportView(){
+  const rows=data.tickets.map(ticket=>`<tr><td><b>${esc(ticket.subject)}</b><div class="muted">${date(ticket.created_at)}</div></td><td>${esc(ticket.customer_name)}<div class="muted">${esc(ticket.customer_email)} · ${esc(ticket.customer_phone)}</div></td><td>${esc(ticket.order_reference||'—')}</td><td><span class="badge ${ticket.status==='resolved'||ticket.status==='closed'?'':'gold'}">${esc(ticket.status.replace('_',' '))}</span></td><td><button class="btn light small" onclick="editTicket('${ticket.id}')">Open</button></td></tr>`);
+  return `${heading('Support inbox','Read and respond to customer messages.')} ${panel('Customer messages',table(['Subject','Customer','Order','Status',''],rows))}`;
+}
+function editTicket(id){
+  const ticket=data.tickets.find(item=>item.id===id);if(!ticket)return;
+  $('#modal-root').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><form class="modal-box" onsubmit="saveTicket(event,'${ticket.id}')"><button class="close-x" type="button" onclick="closeModal()">×</button><div class="eyebrow">SUPPORT MESSAGE · ${date(ticket.created_at)}</div><h2>${esc(ticket.subject)}</h2><p><b>${esc(ticket.customer_name)}</b><br>${esc(ticket.customer_email)} · ${esc(ticket.customer_phone)}<br>Order: ${esc(ticket.order_reference||'—')}</p><div class="panel-body" style="background:var(--surface2);border-radius:9px;white-space:pre-wrap">${esc(ticket.message)}</div><label style="margin-top:14px">Status</label><select name="status">${[['open','Open'],['in_progress','In progress'],['resolved','Resolved'],['closed','Closed']].map(([value,label])=>`<option value="${value}" ${ticket.status===value?'selected':''}>${label}</option>`).join('')}</select><label>Your reply / internal note</label><textarea name="admin_reply" rows="4">${esc(ticket.admin_reply)}</textarea><div class="modal-actions"><button class="btn light" type="button" onclick="closeModal()">Close</button><button class="btn">Save update</button></div></form></div>`;
+}
+async function saveTicket(event,id){event.preventDefault();const f=new FormData(event.currentTarget);const {error}=await db.from('support_tickets').update({status:f.get('status'),admin_reply:String(f.get('admin_reply')).trim()}).eq('id',id);if(error)return showError(error,'Could not save support update');closeModal();toast('Support message updated');await openTab('support')}
+function reviewsView(){
+  const rows=data.reviews.map(review=>`<tr><td>${esc(data.products.find(p=>p.id===review.product_id)?.name||'Product removed')}</td><td>${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</td><td style="min-width:240px">${esc(review.body)}</td><td><span class="badge ${review.status==='published'?'':'gold'}">${esc(review.status)}</span></td><td><div class="actions">${review.status!=='published'?`<button class="btn small" onclick="setReview(${review.id},'published')">Publish</button>`:''}${review.status!=='rejected'?`<button class="btn light small" onclick="setReview(${review.id},'rejected')">Hide</button>`:''}<button class="btn danger small" onclick="deleteReview(${review.id})">Delete</button></div></td></tr>`);
+  return `${heading('Customer reviews','Approve reviews before they appear on the public website.')} ${panel('Reviews',table(['Product','Rating','Customer review','Visibility','Actions'],rows))}`;
+}
+async function setReview(id,status){const {error}=await db.from('reviews').update({status}).eq('id',id);if(error)return showError(error,'Could not update review');await openTab('reviews')}
+async function deleteReview(id){if(!confirm('Permanently delete this review?'))return;const {error}=await db.from('reviews').delete().eq('id',id);if(error)return showError(error,'Could not delete review');await openTab('reviews')}
+function settingsView(){
+  return `${heading('Store settings','Adjust checkout delivery fees.')}<form class="panel panel-body" style="max-width:620px" onsubmit="saveSettings(event)"><label>Standard delivery fee (PKR)</label><input name="shipping_fee_pkr" type="number" min="0" step="1" value="${data.settings.shipping_fee_pkr}" required><label>Free delivery for orders over (PKR)</label><input name="free_shipping_over_pkr" type="number" min="0" step="1" value="${data.settings.free_shipping_over_pkr}" required><p class="muted">These values are used automatically when the website calculates delivery at checkout.</p><button class="btn">Save settings</button></form>`;
+}
+async function saveSettings(event){event.preventDefault();const f=new FormData(event.currentTarget);const {error}=await db.from('store_settings').update({shipping_fee_pkr:Number(f.get('shipping_fee_pkr')),free_shipping_over_pkr:Number(f.get('free_shipping_over_pkr'))}).eq('id',true);if(error)return showError(error,'Could not save store settings');toast('Store settings saved');await openTab('settings')}
+function closeModal(){$('#modal-root').innerHTML=''}
+async function start(){
+  if(!db){loginView('The secure database client did not load. Refresh the page or contact the store owner.');return}
+  try{const {data:result,error}=await db.auth.getSession();if(error)throw error;if(await verifyAdmin(result.session))await openTab('overview')}
+  catch(error){showError(error,'Could not verify administrator access');loginView('We could not verify access. Please sign in again.')}
+  db.auth.onAuthStateChange((_event,next)=>{session=next;if(!next)loginView('You have been signed out.');else if(!session)setTimeout(()=>start(),0)});
+}
+start();
+</script>
+</body>
+</html>
